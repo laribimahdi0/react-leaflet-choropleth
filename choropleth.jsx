@@ -12,7 +12,7 @@ const style = ({
 }) => {
   return feature => {
 
-    const values = data.features.map(item => (valueProperty === 'function')
+    const values = data.features.map(item => (typeof valueProperty === 'function')
       ? valueProperty(item)
       : item.properties[valueProperty])
 

@@ -26,7 +26,7 @@ var style = function style(_ref) {
   return function (feature) {
 
     var values = data.features.map(function (item) {
-      return valueProperty === 'function' ? valueProperty(item) : item.properties[valueProperty];
+      return typeof valueProperty === 'function' ? valueProperty(item) : item.properties[valueProperty];
     });
 
     var limits = _chromaJs2.default.limits(values, mode, steps - 1);
