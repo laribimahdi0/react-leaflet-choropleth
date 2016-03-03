@@ -12,6 +12,10 @@ var _chromaJs = require('chroma-js');
 
 var _chromaJs2 = _interopRequireDefault(_chromaJs);
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var style = function style(_ref) {
@@ -39,7 +43,7 @@ var style = function style(_ref) {
     }) : -1;
 
     var style = {
-      fillColor: idx > -1 ? colors[idx] : 0
+      fillColor: colors[idx] || 0
     };
     switch (typeof userStyle === 'undefined' ? 'undefined' : _typeof(userStyle)) {
       case 'function':
@@ -53,6 +57,7 @@ var style = function style(_ref) {
 };
 
 exports.default = function (props) {
-  return React.createElement(_reactLeaflet.GeoJson, { data: props.data, style: style(props) });
+  props = Object.assign({}, props, { style: style(props) });
+  return _react2.default.createElement(_reactLeaflet.GeoJson, props);
 };
 

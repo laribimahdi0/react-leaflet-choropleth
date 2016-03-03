@@ -1,5 +1,6 @@
 import { GeoJson } from 'react-leaflet'
 import chroma from 'chroma-js'
+import React from 'react'
 
 const style = ({
   valueProperty,
@@ -28,9 +29,7 @@ const style = ({
       : -1
     
     const style = {
-      fillColor: (idx > -1)
-        ? colors[idx]
-        : 0
+      fillColor: colors[idx] || 0
     }
     switch (typeof userStyle) {
       case 'function':
@@ -43,6 +42,7 @@ const style = ({
   }
 }
 
-export default (props) => (
-  <GeoJson data={props.data} style={style(props)} />
-)
+export default (props) => {
+  props = Object.assign({}, props, {style: style(props)})
+  return ( <GeoJson {...props} /> )
+}
