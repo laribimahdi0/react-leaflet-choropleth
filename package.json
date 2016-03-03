@@ -4,7 +4,8 @@
   "description": "React Component for displaying GeoJson data in Choropleth form",
   "main": "choropleth.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "start": "babel choropleth.jsx > choropleth.js", 
+   "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
