@@ -2,24 +2,111 @@ import { GeoJson } from 'react-leaflet'
 import chroma from 'chroma-js'
 import React from 'react'
 
-const style = ({
-  valueProperty,
-  style: userStyle,
+export default (props) => {
+  const features = Array.isArray(props.data) ? props.data : props.data.features
+  const chroms = getColors(props)
+  return (
+    <div>
+      {features.map( (feature, idx) => 
+        (<GeoJson 
+          key={idx}
+          {...props}
+          style={getStyle(props, chroms, feature)}
+          {...getStyle(props, chroms, feature)}
+          data={feature}
+        />)
+      ) }
+      </div>
+  )
+}
+
+
+
+
+function isFunction (prop) {
+  return typeof prop === 'function'
+}
+
+function getColors({
   data,
-  colors,
-  scale,
+  valueProperty,
   mode,
-  steps
-}) => {
-  return feature => {
+  steps,
+  scale,
+  colors: cl
+}){
+  
+  const colors = {}
+  const features = Array.isArray(data) ? data : data.features
+  
+  const values = features.map(item => isFunction(valueProperty)
+    ? valueProperty(item)
+    : item.properties[valueProperty])
+      
+  colors.limits = chroma.limits(values, mode, steps - 1)
+  colors.colors = cl || chroma.scale(scale).colors(steps)
+  return colors
+}
 
-    const values = data.features.map(item => (typeof valueProperty === 'function')
-      ? valueProperty(item)
-      : item.properties[valueProperty])
+function getStyle ({
+  valueProperty,  
+  style: userStyle
+},{
+  limits,
+  colors
+}, feature) {  
+  const featureValue = isFunction(valueProperty)
+    ? valueProperty(feature)
+    : feature.properties[valueProperty]
 
-    const limits = chroma.limits(values, mode, steps - 1)
-    const colors = colors || chroma.scale(scale).colors(steps)
+  const idx = (!isNaN(featureValue)) 
+    ? limits.findIndex(lim => featureValue <= lim) 
+    : -1
+  
+  const style = {
+    fillColor: colors[idx] || 0
+  }
+  switch (typeof userStyle) {
+    case 'function':
+      return Object.assign(userStyle(), style)
+    case 'object':
+      return Object.assign({}, userStyle, style)
+    default:
+      return style
+  }
+}
 
+
+
+class Choropleth extends GeoJson {
+  
+  //TODO: move styling to componentWillUpdate
+  
+  
+  componentWillMount () {
+    const {
+      valueProperty,
+      style: userStyle,
+      data,
+      scale,
+      mode,
+      steps,
+      colors
+    } = this.props
+    
+    
+    this.props = Object.assign({}, this.props, { style: this.style.bind(this) })
+    super.componentWillMount()
+  }
+  
+  style (feature) {
+    const { valueProperty } = this.props
+    const {      
+      userStyle,
+      colors,
+      limits,
+      values
+    } = this
     const featureValue = (typeof valueProperty === 'function')
       ? valueProperty(feature)
       : feature.properties[valueProperty]
@@ -40,9 +127,4 @@ const style = ({
         return style
     }
   }
-}
-
-export default (props) => {
-  props = Object.assign({}, props, {style: style(props)})
-  return ( <GeoJson {...props} /> )
 }
