@@ -68,63 +68,10 @@ function getStyle ({
   }
   switch (typeof userStyle) {
     case 'function':
-      return Object.assign(userStyle(), style)
+      return Object.assign(userStyle(feature), style)
     case 'object':
       return Object.assign({}, userStyle, style)
     default:
       return style
-  }
-}
-
-
-
-class Choropleth extends GeoJson {
-  
-  //TODO: move styling to componentWillUpdate
-  
-  
-  componentWillMount () {
-    const {
-      valueProperty,
-      style: userStyle,
-      data,
-      scale,
-      mode,
-      steps,
-      colors
-    } = this.props
-    
-    
-    this.props = Object.assign({}, this.props, { style: this.style.bind(this) })
-    super.componentWillMount()
-  }
-  
-  style (feature) {
-    const { valueProperty } = this.props
-    const {      
-      userStyle,
-      colors,
-      limits,
-      values
-    } = this
-    const featureValue = (typeof valueProperty === 'function')
-      ? valueProperty(feature)
-      : feature.properties[valueProperty]
-    
-    const idx = (!isNaN(featureValue)) 
-      ? limits.findIndex(lim => featureValue <= lim) 
-      : -1
-    
-    const style = {
-      fillColor: colors[idx] || 0
-    }
-    switch (typeof userStyle) {
-      case 'function':
-        return Object.assign(userStyle(), style)
-      case 'object':
-        return Object.assign({}, userStyle, style)
-      default:
-        return style
-    }
   }
 }
