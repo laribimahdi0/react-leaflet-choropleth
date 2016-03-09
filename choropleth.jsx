@@ -55,6 +55,7 @@ function getStyle ({
   limits,
   colors
 }, feature) {  
+  
   const featureValue = isFunction(valueProperty)
     ? valueProperty(feature)
     : feature.properties[valueProperty]
@@ -63,15 +64,22 @@ function getStyle ({
     ? limits.findIndex(lim => featureValue <= lim) 
     : -1
   
-  const style = {
-    fillColor: colors[idx] || 0
+  if(colors[idx]){
+    const style = {
+      fillColor: colors[idx]
+    }
+    
+    switch (typeof userStyle) {
+      case 'function':
+        return Object.assign(userStyle(feature), style)
+      case 'object':
+        return Object.assign({}, userStyle, style)
+      default:
+        return style
+    }
+      
+  } else {
+    return style
   }
-  switch (typeof userStyle) {
-    case 'function':
-      return Object.assign(userStyle(feature), style)
-    case 'object':
-      return Object.assign({}, userStyle, style)
-    default:
-      return style
-  }
+  
 }
