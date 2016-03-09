@@ -79,7 +79,7 @@ function getStyle ({
     }
       
   } else {
-    return style
+    return userStyle
   }
   
 }
