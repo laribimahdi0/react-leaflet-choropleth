@@ -7,8 +7,8 @@ export default (props) => {
   const chroms = getColors(props)
   return (
     <div>
-      {features.map( (feature, idx) => 
-        (<GeoJson 
+      {features.map( (feature, idx) =>
+        (<GeoJson
           key={idx}
           {...props}
           style={getStyle(props, chroms, feature)}
@@ -35,40 +35,42 @@ function getColors({
   scale,
   colors: cl
 }){
-  
+
   const colors = {}
   const features = Array.isArray(data) ? data : data.features
-  
+
   const values = features.map(item => isFunction(valueProperty)
     ? valueProperty(item)
     : item.properties[valueProperty])
-      
+
   colors.limits = chroma.limits(values, mode, steps - 1)
   colors.colors = cl || chroma.scale(scale).colors(steps)
   return colors
 }
 
 function getStyle ({
-  valueProperty,  
+  valueProperty,
+  visible,
   style: userStyle
 },{
   limits,
   colors
-}, feature) {  
-  
+}, feature) {
+  if( !(( isFunction(visible) && visible(feature) ) || feature.properties[visible] ) ) return userStyle
+
   const featureValue = isFunction(valueProperty)
     ? valueProperty(feature)
     : feature.properties[valueProperty]
 
-  const idx = (!isNaN(featureValue)) 
-    ? limits.findIndex(lim => featureValue <= lim) 
+  const idx = (!isNaN(featureValue))
+    ? limits.findIndex(lim => featureValue <= lim)
     : -1
-  
+
   if(colors[idx]){
     const style = {
       fillColor: colors[idx]
     }
-    
+
     switch (typeof userStyle) {
       case 'function':
         return Object.assign(userStyle(feature), style)
@@ -77,9 +79,9 @@ function getStyle ({
       default:
         return style
     }
-      
+
   } else {
     return userStyle
   }
-  
+
 }

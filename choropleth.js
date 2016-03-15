@@ -65,10 +65,12 @@ function getColors(_ref) {
 
 function getStyle(_ref2, _ref3, feature) {
   var valueProperty = _ref2.valueProperty;
+  var visible = _ref2.visible;
   var userStyle = _ref2.style;
   var limits = _ref3.limits;
   var colors = _ref3.colors;
 
+  if (!(isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
 
   var featureValue = isFunction(valueProperty) ? valueProperty(feature) : feature.properties[valueProperty];
 
