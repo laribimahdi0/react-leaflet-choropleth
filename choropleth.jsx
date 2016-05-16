@@ -40,8 +40,7 @@ function getColors({
     ? valueProperty(item)
     : item.properties[valueProperty])
 
-  //colors.limits = chroma.limits(values, mode, steps - 1)
-  colors.limits = chroma.scale.domain(0,0.5,0.7,0.85,0.94,1)
+  colors.limits = chroma.limits(values, mode, steps - 1)
   colors.colors = cl || chroma.scale(scale).colors(steps)
   return colors
 }
