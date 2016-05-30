@@ -53,7 +53,8 @@ function getStyle ({
   limits,
   colors
 }, feature) {
-  if( !(( isFunction(visible) && visible(feature) ) || feature.properties[visible] ) ) return userStyle
+  visible = visible || (() => true) //If visible was not given, always return true
+  if( !(( isFunction(visible) && visible(feature) ) || feature.properties[visible]) ) return userStyle
 
   const featureValue = isFunction(valueProperty)
     ? valueProperty(feature)

@@ -70,6 +70,9 @@ function getStyle(_ref2, _ref3, feature) {
   var limits = _ref3.limits;
   var colors = _ref3.colors;
 
+  visible = visible || function () {
+    return true;
+  }; //If visible was not given, always return true
   if (!(isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
 
   var featureValue = isFunction(valueProperty) ? valueProperty(feature) : feature.properties[valueProperty];
