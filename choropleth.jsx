@@ -86,7 +86,7 @@ function getStyle ({
 }
 
 function cloneChildrenWithFeature(props, feature){
-  const newProps = assign(props, { feature })
+  const newProps = assign({}, props, { feature })
   return ChildNode.map(props.children, child => {
     return child ? cloneElement(child, newProps) : null
   })
