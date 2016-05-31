@@ -1,7 +1,7 @@
 import { GeoJson } from 'react-leaflet'
 import chroma from 'chroma-js'
-import React from 'react'
-
+import React, { cloneElement, Children } from 'react'
+import assign from './assign'
 export default (props) => {
   const features = Array.isArray(props.data) ? props.data : props.data.features
   const chroms = getColors(props)
@@ -14,6 +14,7 @@ export default (props) => {
           style={getStyle(props, chroms, feature)}
           {...getStyle(props, chroms, feature)}
           data={feature}
+          children={props.children ? cloneChildrenWithFeature(props, feature) : props.children}
         />)
       ) }
       </div>
@@ -71,9 +72,9 @@ function getStyle ({
 
     switch (typeof userStyle) {
       case 'function':
-        return Object.assign(userStyle(feature), style)
+        return assign(userStyle(feature), style)
       case 'object':
-        return Object.assign({}, userStyle, style)
+        return assign({}, userStyle, style)
       default:
         return style
     }
@@ -82,4 +83,11 @@ function getStyle ({
     return userStyle
   }
 
+}
+
+function cloneChildrenWithFeature(props, feature){
+  const newProps = assign(props, { feature })
+  return ChildNode.map(props.children, child => {
+    return child ? cloneElement(child, newProps) : null
+  })
 }

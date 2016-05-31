@@ -18,6 +18,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _assign = require('./assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
@@ -32,7 +36,8 @@ exports.default = function (props) {
       }, props, {
         style: getStyle(props, chroms, feature)
       }, getStyle(props, chroms, feature), {
-        data: feature
+        data: feature,
+        children: props.children ? cloneChildrenWithFeature(props, feature) : props.children
       }));
     })
   );
@@ -88,14 +93,21 @@ function getStyle(_ref2, _ref3, feature) {
 
     switch (typeof userStyle === 'undefined' ? 'undefined' : _typeof(userStyle)) {
       case 'function':
-        return Object.assign(userStyle(feature), style);
+        return (0, _assign2.default)(userStyle(feature), style);
       case 'object':
-        return Object.assign({}, userStyle, style);
+        return (0, _assign2.default)({}, userStyle, style);
       default:
         return style;
     }
   } else {
     return userStyle;
   }
+}
+
+function cloneChildrenWithFeature(props, feature) {
+  var newProps = (0, _assign2.default)(props, { feature: feature });
+  return ChildNode.map(props.children, function (child) {
+    return child ? (0, _react.cloneElement)(child, newProps) : null;
+  });
 }
 
