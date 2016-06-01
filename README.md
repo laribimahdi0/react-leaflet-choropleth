@@ -23,7 +23,7 @@ This is highly based on [leaflet-choropleth](https://github.com/timwis/leaflet-c
 
 `visible`:A way to determine whether to use the fillColor provided in `styles`, or to use the fillColor of the choropleth. Useful for overwriting the choropleth color.
 
-`ref`: A way to get the leaflet geojson Object. <ref>.leafletElement will be a FeatureGroup containing the leaflet layers created.
+`ref`: A way to get the leaflet geojson Object. `<ref>.leafletElement` will be a FeatureGroup containing the leaflet layers created.
 
 All other props passed to `Choropleth` will also be passed to each geojson layer.
 
