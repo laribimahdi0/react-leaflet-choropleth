@@ -67,7 +67,7 @@ export default class Choropleth extends Component {
     const features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features
     const chroms = this.getColors()
     return (
-      <FeatureGroup map={this.props.map} layerContainer={this.props.layerContainer} ref={(layer) => this.leafletElement = layer} >
+      <FeatureGroup map={this.props.map} layerContainer={this.props.layerContainer} ref={ (layer) => layer ? this.leafletElement = layer.leafletElement : null } >
         {features.map( (feature, idx) =>
           (<GeoJson
             key={idx}

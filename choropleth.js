@@ -125,7 +125,7 @@ var Choropleth = function (_Component) {
       return _react2.default.createElement(
         FeatureGroup,
         { map: this.props.map, layerContainer: this.props.layerContainer, ref: function ref(layer) {
-            return _this2.leafletElement = layer;
+            return layer ? _this2.leafletElement = layer.leafletElement : null;
           } },
         features.map(function (feature, idx) {
           return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
