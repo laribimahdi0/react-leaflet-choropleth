@@ -49,6 +49,8 @@ var Choropleth = function (_Component) {
   }, {
     key: 'getColors',
     value: function getColors() {
+      var _this2 = this;
+
       var _props = this.props;
       var data = _props.data;
       var valueProperty = _props.valueProperty;
@@ -61,7 +63,7 @@ var Choropleth = function (_Component) {
       var features = Array.isArray(data) ? data : data.features;
 
       var values = features.map(function (item) {
-        return isFunction(valueProperty) ? valueProperty(item) : item.properties[valueProperty];
+        return _this2.isFunction(valueProperty) ? valueProperty(item) : item.properties[valueProperty];
       });
 
       colors.limits = _chromaJs2.default.limits(values, mode, steps - 1);
@@ -82,9 +84,9 @@ var Choropleth = function (_Component) {
       var userStyle = _props2.style;
 
 
-      if (!(isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
+      if (!(this.isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
 
-      var featureValue = isFunction(valueProperty) ? valueProperty(feature) : feature.properties[valueProperty];
+      var featureValue = this.isFunction(valueProperty) ? valueProperty(feature) : feature.properties[valueProperty];
 
       var idx = !isNaN(featureValue) ? limits.findIndex(function (lim) {
         return featureValue <= lim;
@@ -118,23 +120,23 @@ var Choropleth = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features;
       var chroms = this.getColors();
       return _react2.default.createElement(
         _reactLeaflet.FeatureGroup,
         { map: this.props.map, layerContainer: this.props.layerContainer, ref: function ref(layer) {
-            return layer ? _this2.leafletElement = layer.leafletElement : null;
+            return layer ? _this3.leafletElement = layer.leafletElement : null;
           } },
         features.map(function (feature, idx) {
           return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
             key: idx
-          }, _this2.props, {
-            style: _this2.getStyle(_this2.props, chroms, feature)
-          }, _this2.getStyle(chroms, feature), {
+          }, _this3.props, {
+            style: _this3.getStyle(_this3.props, chroms, feature)
+          }, _this3.getStyle(chroms, feature), {
             data: feature,
-            children: _this2.props.children ? _this2.cloneChildrenWithFeature(_this2.props, feature) : _this2.props.children
+            children: _this3.props.children ? _this3.cloneChildrenWithFeature(_this3.props, feature) : _this3.props.children
           }));
         })
       );

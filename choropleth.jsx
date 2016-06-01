@@ -14,7 +14,7 @@ export default class Choropleth extends Component {
     const colors = {}
     const features = Array.isArray(data) ? data : data.features
 
-    const values = features.map(item => isFunction(valueProperty)
+    const values = features.map(item => this.isFunction(valueProperty)
       ? valueProperty(item)
       : item.properties[valueProperty])
 
@@ -26,9 +26,9 @@ export default class Choropleth extends Component {
   getStyle ({ limits, colors }, feature) {
     const { valueProperty, visible = (() => true), style: userStyle } = this.props
 
-    if( !(( isFunction(visible) && visible(feature) ) || feature.properties[visible]) ) return userStyle
+    if( !(( this.isFunction(visible) && visible(feature) ) || feature.properties[visible]) ) return userStyle
 
-    const featureValue = isFunction(valueProperty)
+    const featureValue = this.isFunction(valueProperty)
       ? valueProperty(feature)
       : feature.properties[valueProperty]
 
