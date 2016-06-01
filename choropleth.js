@@ -124,6 +124,7 @@ var Choropleth = function (_Component) {
 
       var features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features;
       var chroms = this.getColors();
+      var options = _extends({ layerContaner: _layerContainer }, this.props);
       return _react2.default.createElement(
         _reactLeaflet.FeatureGroup,
         { map: this.props.map, layerContainer: this.props.layerContainer, ref: function ref(layer) {

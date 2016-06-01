@@ -66,6 +66,7 @@ export default class Choropleth extends Component {
   render(){
     const features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features
     const chroms = this.getColors()
+    const options = { layerContaner: _layerContainer, ...this.props }
     return (
       <FeatureGroup map={this.props.map} layerContainer={this.props.layerContainer} ref={ (layer) => layer ? this.leafletElement = layer.leafletElement : null } >
         {features.map( (feature, idx) =>
