@@ -1,4 +1,4 @@
-import { GeoJson,  } from 'react-leaflet'
+import { GeoJson, FeatureGroup } from 'react-leaflet'
 import chroma from 'chroma-js'
 import React, { Component, cloneElement, Children } from 'react'
 import assign from './assign'
