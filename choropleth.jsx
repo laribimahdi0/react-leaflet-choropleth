@@ -72,7 +72,7 @@ export default class Choropleth extends Component {
           (<GeoJson
             key={idx}
             {...this.props}
-            style={this.getStyle(this.props, chroms, feature)}
+            style={this.getStyle(chroms, feature)}
             {...this.getStyle(chroms, feature)}
             data={feature}
             children={this.props.children ? this.cloneChildrenWithFeature(this.props, feature) : this.props.children}

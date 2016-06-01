@@ -133,7 +133,7 @@ var Choropleth = function (_Component) {
           return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
             key: idx
           }, _this3.props, {
-            style: _this3.getStyle(_this3.props, chroms, feature)
+            style: _this3.getStyle(chroms, feature)
           }, _this3.getStyle(chroms, feature), {
             data: feature,
             children: _this3.props.children ? _this3.cloneChildrenWithFeature(_this3.props, feature) : _this3.props.children
