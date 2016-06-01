@@ -4,9 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _reactLeaflet = require('react-leaflet');
 
@@ -24,90 +26,123 @@ var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props) {
-  var features = Array.isArray(props.data) ? props.data : props.data.features;
-  var chroms = getColors(props);
-  return _react2.default.createElement(
-    'div',
-    null,
-    features.map(function (feature, idx) {
-      return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
-        key: idx
-      }, props, {
-        style: getStyle(props, chroms, feature)
-      }, getStyle(props, chroms, feature), {
-        data: feature,
-        children: props.children ? cloneChildrenWithFeature(props, feature) : props.children
-      }));
-    })
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function isFunction(prop) {
-  return typeof prop === 'function';
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function getColors(_ref) {
-  var data = _ref.data;
-  var valueProperty = _ref.valueProperty;
-  var mode = _ref.mode;
-  var steps = _ref.steps;
-  var scale = _ref.scale;
-  var cl = _ref.colors;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var Choropleth = function (_Component) {
+  _inherits(Choropleth, _Component);
 
-  var colors = {};
-  var features = Array.isArray(data) ? data : data.features;
+  function Choropleth() {
+    _classCallCheck(this, Choropleth);
 
-  var values = features.map(function (item) {
-    return isFunction(valueProperty) ? valueProperty(item) : item.properties[valueProperty];
-  });
-
-  colors.limits = _chromaJs2.default.limits(values, mode, steps - 1);
-  colors.colors = cl || _chromaJs2.default.scale(scale).colors(steps);
-  return colors;
-}
-
-function getStyle(_ref2, _ref3, feature) {
-  var valueProperty = _ref2.valueProperty;
-  var visible = _ref2.visible;
-  var userStyle = _ref2.style;
-  var limits = _ref3.limits;
-  var colors = _ref3.colors;
-
-  visible = visible || function () {
-    return true;
-  }; //If visible was not given, always return true
-  if (!(isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
-
-  var featureValue = isFunction(valueProperty) ? valueProperty(feature) : feature.properties[valueProperty];
-
-  var idx = !isNaN(featureValue) ? limits.findIndex(function (lim) {
-    return featureValue <= lim;
-  }) : -1;
-
-  if (colors[idx]) {
-    var style = {
-      fillColor: colors[idx]
-    };
-
-    switch (typeof userStyle === 'undefined' ? 'undefined' : _typeof(userStyle)) {
-      case 'function':
-        return (0, _assign2.default)(userStyle(feature), style);
-      case 'object':
-        return (0, _assign2.default)({}, userStyle, style);
-      default:
-        return style;
-    }
-  } else {
-    return userStyle;
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Choropleth).apply(this, arguments));
   }
-}
 
-function cloneChildrenWithFeature(props, feature) {
-  var newProps = (0, _assign2.default)({}, props, { feature: feature });
-  return _react.Children.map(props.children, function (child) {
-    return child ? (0, _react.cloneElement)(child, newProps) : null;
-  });
-}
+  _createClass(Choropleth, [{
+    key: 'isFunction',
+    value: function isFunction(prop) {
+      return typeof prop === 'function';
+    }
+  }, {
+    key: 'getColors',
+    value: function getColors() {
+      var _props = this.props;
+      var data = _props.data;
+      var valueProperty = _props.valueProperty;
+      var mode = _props.mode;
+      var steps = _props.steps;
+      var scale = _props.scale;
+      var cl = _props.colors;
+
+      var colors = {};
+      var features = Array.isArray(data) ? data : data.features;
+
+      var values = features.map(function (item) {
+        return isFunction(valueProperty) ? valueProperty(item) : item.properties[valueProperty];
+      });
+
+      colors.limits = _chromaJs2.default.limits(values, mode, steps - 1);
+      colors.colors = cl || _chromaJs2.default.scale(scale).colors(steps);
+      return colors;
+    }
+  }, {
+    key: 'getStyle',
+    value: function getStyle(_ref, feature) {
+      var limits = _ref.limits;
+      var colors = _ref.colors;
+      var _props2 = this.props;
+      var valueProperty = _props2.valueProperty;
+      var _props2$visible = _props2.visible;
+      var visible = _props2$visible === undefined ? function () {
+        return true;
+      } : _props2$visible;
+      var userStyle = _props2.style;
+
+
+      if (!(isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
+
+      var featureValue = isFunction(valueProperty) ? valueProperty(feature) : feature.properties[valueProperty];
+
+      var idx = !isNaN(featureValue) ? limits.findIndex(function (lim) {
+        return featureValue <= lim;
+      }) : -1;
+
+      if (colors[idx]) {
+        var style = {
+          fillColor: colors[idx]
+        };
+
+        switch (typeof userStyle === 'undefined' ? 'undefined' : _typeof(userStyle)) {
+          case 'function':
+            return (0, _assign2.default)(userStyle(feature), style);
+          case 'object':
+            return (0, _assign2.default)({}, userStyle, style);
+          default:
+            return style;
+        }
+      } else {
+        return userStyle;
+      }
+    }
+  }, {
+    key: 'cloneChildrenWithFeature',
+    value: function cloneChildrenWithFeature(props, feature) {
+      var newProps = (0, _assign2.default)({}, props, { feature: feature });
+      return _react.Children.map(props.children, function (child) {
+        return child ? (0, _react.cloneElement)(child, newProps) : null;
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features;
+      var chroms = this.getColors();
+      return _react2.default.createElement(
+        FeatureGroup,
+        { map: this.props.map, layerContainer: this.props.layerContainer, ref: function ref(layer) {
+            return _this2.leafletElement = layer;
+          } },
+        features.map(function (feature, idx) {
+          return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
+            key: idx
+          }, _this2.props, {
+            style: _this2.getStyle(_this2.props, chroms, feature)
+          }, _this2.getStyle(chroms, feature), {
+            data: feature,
+            children: _this2.props.children ? _this2.cloneChildrenWithFeature(_this2.props, feature) : _this2.props.children
+          }));
+        })
+      );
+    }
+  }]);
+
+  return Choropleth;
+}(_react.Component);
+
+exports.default = Choropleth;
 
