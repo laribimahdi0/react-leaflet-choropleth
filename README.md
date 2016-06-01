@@ -3,7 +3,7 @@ This component extends geoJson from react-leaflet and will use chroma to set the
 This is highly based on [leaflet-choropleth](https://github.com/timwis/leaflet-choropleth) by timwis.
 ## Installation
 
-`npm install LiveBy/react-leaflet-choropleth`
+`npm install react-leaflet-choropleth`
 
 ##Options
 ###Required
