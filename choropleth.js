@@ -127,9 +127,9 @@ var Choropleth = function (_Component) {
       var features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features;
       var chroms = this.getColors();
       var _props3 = this.props;
-      var layerContaner = _props3.layerContaner;
+      var layerContainer = _props3.layerContainer;
 
-      var options = _objectWithoutProperties(_props3, ['layerContaner']); //remove
+      var options = _objectWithoutProperties(_props3, ['layerContainer']); //remove
 
 
       return _react2.default.createElement(
