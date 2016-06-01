@@ -26,6 +26,8 @@ var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -124,16 +126,21 @@ var Choropleth = function (_Component) {
 
       var features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features;
       var chroms = this.getColors();
-      var options = _extends({ layerContaner: _layerContainer }, this.props);
+      var _props3 = this.props;
+      var layerContaner = _props3.layerContaner;
+
+      var options = _objectWithoutProperties(_props3, ['layerContaner']); //remove
+
+
       return _react2.default.createElement(
         _reactLeaflet.FeatureGroup,
-        { map: this.props.map, layerContainer: this.props.layerContainer, ref: function ref(layer) {
+        { map: this.props.map, layerContainer: layerContainer, ref: function ref(layer) {
             return layer ? _this3.leafletElement = layer.leafletElement : null;
           } },
         features.map(function (feature, idx) {
           return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
             key: idx
-          }, _this3.props, {
+          }, options, {
             style: _this3.getStyle(chroms, feature)
           }, _this3.getStyle(chroms, feature), {
             data: feature,
