@@ -128,8 +128,9 @@ var Choropleth = function (_Component) {
       var chroms = this.getColors();
       var _props3 = this.props;
       var layerContainer = _props3.layerContainer;
+      var identity = _props3.identity;
 
-      var options = _objectWithoutProperties(_props3, ['layerContainer']); //remove
+      var options = _objectWithoutProperties(_props3, ['layerContainer', 'identity']); //remove
 
 
       return _react2.default.createElement(
@@ -139,7 +140,7 @@ var Choropleth = function (_Component) {
           } },
         features.map(function (feature, idx) {
           return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
-            key: idx
+            key: identity ? identity(feature) : idx
           }, options, {
             style: _this3.getStyle(chroms, feature)
           }, _this3.getStyle(chroms, feature), {
