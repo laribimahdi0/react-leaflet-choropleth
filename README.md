@@ -25,6 +25,8 @@ This is highly based on [leaflet-choropleth](https://github.com/timwis/leaflet-c
 
 `ref`: A way to get the leaflet geojson Object. `<ref>.leafletElement` will be a FeatureGroup containing the leaflet layers created.
 
+ `identity`: A function used to set the `key` prop for each geojson feature
+
 All other props passed to `Choropleth` will also be passed to each geojson layer.
 
 ## Example
