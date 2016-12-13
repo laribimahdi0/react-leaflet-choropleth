@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -40,7 +40,7 @@ var Choropleth = function (_Component) {
   function Choropleth() {
     _classCallCheck(this, Choropleth);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Choropleth).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Choropleth.__proto__ || Object.getPrototypeOf(Choropleth)).apply(this, arguments));
   }
 
   _createClass(Choropleth, [{
@@ -53,13 +53,13 @@ var Choropleth = function (_Component) {
     value: function getColors() {
       var _this2 = this;
 
-      var _props = this.props;
-      var data = _props.data;
-      var valueProperty = _props.valueProperty;
-      var mode = _props.mode;
-      var steps = _props.steps;
-      var scale = _props.scale;
-      var cl = _props.colors;
+      var _props = this.props,
+          data = _props.data,
+          valueProperty = _props.valueProperty,
+          mode = _props.mode,
+          steps = _props.steps,
+          scale = _props.scale,
+          cl = _props.colors;
 
       var colors = {};
       var features = Array.isArray(data) ? data : data.features;
@@ -75,15 +75,15 @@ var Choropleth = function (_Component) {
   }, {
     key: 'getStyle',
     value: function getStyle(_ref, feature) {
-      var limits = _ref.limits;
-      var colors = _ref.colors;
-      var _props2 = this.props;
-      var valueProperty = _props2.valueProperty;
-      var _props2$visible = _props2.visible;
-      var visible = _props2$visible === undefined ? function () {
+      var limits = _ref.limits,
+          colors = _ref.colors;
+      var _props2 = this.props,
+          valueProperty = _props2.valueProperty,
+          _props2$visible = _props2.visible,
+          visible = _props2$visible === undefined ? function () {
         return true;
-      } : _props2$visible;
-      var userStyle = _props2.style;
+      } : _props2$visible,
+          userStyle = _props2.style;
 
 
       if (!(this.isFunction(visible) && visible(feature) || feature.properties[visible])) return userStyle;
@@ -126,11 +126,11 @@ var Choropleth = function (_Component) {
 
       var features = Array.isArray(this.props.data) ? this.props.data : this.props.data.features;
       var chroms = this.getColors();
-      var _props3 = this.props;
-      var layerContainer = _props3.layerContainer;
-      var identity = _props3.identity;
 
-      var options = _objectWithoutProperties(_props3, ['layerContainer', 'identity']); //remove
+      var _props3 = this.props,
+          layerContainer = _props3.layerContainer,
+          identity = _props3.identity,
+          options = _objectWithoutProperties(_props3, ['layerContainer', 'identity']); //remove 
 
 
       return _react2.default.createElement(
@@ -139,7 +139,7 @@ var Choropleth = function (_Component) {
             return layer ? _this3.leafletElement = layer.leafletElement : null;
           } },
         features.map(function (feature, idx) {
-          return _react2.default.createElement(_reactLeaflet.GeoJson, _extends({
+          return _react2.default.createElement(_reactLeaflet.GeoJSON, _extends({
             key: identity ? identity(feature) : idx
           }, options, {
             style: _this3.getStyle(chroms, feature)

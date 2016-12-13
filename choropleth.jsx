@@ -1,4 +1,4 @@
-import { GeoJson, FeatureGroup } from 'react-leaflet'
+import { GeoJSON, FeatureGroup } from 'react-leaflet'
 import chroma from 'chroma-js'
 import React, { Component, cloneElement, Children } from 'react'
 import assign from './assign'
@@ -70,7 +70,7 @@ export default class Choropleth extends Component {
     return (
       <FeatureGroup map={this.props.map} layerContainer={layerContainer} ref={ (layer) => layer ? this.leafletElement = layer.leafletElement : null } >
         {features.map( (feature, idx) =>
-          (<GeoJson
+          (<GeoJSON
             key={(identity) ? identity(feature) : idx}
             {...options}
             style={this.getStyle(chroms, feature)}
