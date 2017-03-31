@@ -5,8 +5,10 @@ This is highly based on [leaflet-choropleth](https://github.com/timwis/leaflet-c
 
 `npm install react-leaflet-choropleth`
 
-##Options
-###Required
+## Options
+
+### Required
+
 `data`: geojson data as a FeatureCollection our as an array.
 
 `style`: Styling to be applied to each geojson object. Can be a function or an object.
@@ -19,7 +21,7 @@ This is highly based on [leaflet-choropleth](https://github.com/timwis/leaflet-c
 
 `mode`: The mode to use from chroma.js. This can be `'e'` from equadistant, `'q'` for quantile or `'k'` for k-means.
 
-###Optional
+### Optional
 
 `visible`:A way to determine whether to use the fillColor provided in `styles`, or to use the fillColor of the choropleth. Useful for overwriting the choropleth color.
 
